@@ -12,6 +12,11 @@ const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public'));
+app.get('/', (req, res) => {
+  res.redirect('/dangnhap.html');
+});
+
 
 // Cấu hình kết nối SQL Server
 const config = {
