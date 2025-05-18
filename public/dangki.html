@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng ký</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <h2>Đăng ký tài khoản</h2>
+  <form onsubmit="register(event)">
+    <label>Tên đăng nhập: <input type="text" id="tendangnhap" required></label><br>
+    <label>Mật khẩu: <input type="password" id="matkhau" required></label><br>
+
+    <h3>Thông tin người chơi</h3>
+    <label>Họ tên: <input type="text" id="hoten" required></label><br>
+    <label>Tuổi: <input type="number" id="tuoi" required></label><br>
+    <label>Giới tính: <input type="text" id="gioitinh"></label><br>
+    <label>Email: <input type="email" id="email"></label><br>
+    <label>Ngày sinh: <input type="date" id="ngaysinh"></label><br>
+
+    <button type="submit">Đăng ký</button>
+    <p>Đã có tài khoản? <a href="dangnhap.html">Đăng nhập tại đây</a></p>
+
+  </form>
+
+  <script>
+    async function register(e) {
+      e.preventDefault();
+
+      const data = {
+        tendangnhap: document.getElementById("tendangnhap").value,
+        matkhau: document.getElementById("matkhau").value,
+        hoten: document.getElementById("hoten").value,
+        tuoi: parseInt(document.getElementById("tuoi").value),
+        gioitinh: document.getElementById("gioitinh").value,
+        ngaysinh: document.getElementById("ngaysinh").value,
+        gmail: document.getElementById("email").value,
+        sdt: document.getElementById("email").value, // nếu không có input SĐT riêng
+        anhdaidien: "" // thêm input nếu muốn upload ảnh
+      };
+
+      try {
+        const res = await fetch('http://localhost:3000/api/dangki', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await res.json();
+
+        if (result.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Đăng ký thành công!',
+            showConfirmButton: false,
+            timer: 2000
+          }).then(() => {
+            window.location.href = "dangnhap.html";
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Đăng ký thất bại',
+            text: result.message || "Vui lòng thử lại"
+          });
+        }
+
+      } catch (error) {
+        console.error('Lỗi:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi máy chủ',
+          text: 'Không thể kết nối đến server!'
+        });
+      }
+    }
+  </script>
+</body>
+</html>

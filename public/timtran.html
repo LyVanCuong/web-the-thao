@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+   <link rel="stylesheet" href="style.css">
+  <title>Tìm trận</title>
+</head>
+<body>
+    <button class="exit-button" onclick="window.location.href='trangchu.html'"><</button>
+  <h2>Tìm kiếm trận đấu</h2>
+  <form onsubmit="search(event)">
+    <label>Chọn môn thể thao:
+      <select id="mon">
+        <option>Bóng đá</option>
+        <option>Cầu lông</option>
+        <option>Bóng chuyền</option>
+      </select>
+    </label>
+    <button type="submit">Tìm kiếm</button>
+  </form>
+
+  <script>
+    function search(e) {
+      e.preventDefault();
+      window.location.href = "danhsachtran.html";
+    }
+  </script>
+</body>
+</html>

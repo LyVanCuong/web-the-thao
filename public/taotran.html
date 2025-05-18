@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tạo trận</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button class="exit-button" onclick="window.location.href='trangchu.html'"><</button>
+  <h2>Tạo trận đấu thể thao</h2>
+  <form onsubmit="submitForm(event)">
+    <label>Địa điểm: <input type="text" required></label><br>
+    <label>Môn thể thao: <input type="text" required></label><br>
+    <label>Thời gian: <input type="datetime-local" required></label><br>
+    <label>Số lượng: <input type="number" required></label><br>
+    <label>Mô tả trận đấu: <input type="text"></label><br>
+    <label>Giới tính yêu cầu: <input type="text"></label><br>
+    <label>Độ tuổi tối thiểu: <input type="number"></label><br>
+    <label>Độ tuổi tối đa: <input type="number"></label><br>
+    <button type="submit">Gửi yêu cầu</button>
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function submitForm(e) {
+    e.preventDefault();
+    Swal.fire({
+      icon: 'success',
+      title: 'Gửi yêu cầu tạo trận thành công! Chờ xét duyệt từ admin',
+      showConfirmButton: false,
+      timer: 3000
+    }).then(() => {
+      window.location.href = "trangchu.html";
+    });
+  }
+</script>
+
+</body>
+</html>

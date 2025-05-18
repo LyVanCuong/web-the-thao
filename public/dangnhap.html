@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đăng nhập</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Thêm SweetAlert2 đúng cách -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <h1>ỨNG DỤNG KẾT NỐI THỂ THAO</h1>
+  <h2>Đăng nhập</h2>
+  <form onsubmit="login(event)">
+    <label>Tên đăng nhập: <input type="text" id="username" required></label><br>
+    <label>Mật khẩu: <input type="password" id="password" required></label><br>
+    <button type="submit">Đăng nhập</button>
+    <p>Chưa có tài khoản? <a href="dangki.html">Đăng ký</a></p>
+  </form>
+
+  <script>
+    async function login(event) {
+      event.preventDefault();
+
+      const tendangnhap = document.getElementById('username').value;
+      const matkhau = document.getElementById('password').value;
+
+      try {
+        const res = await fetch('http://localhost:3000/api/dangnhap', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tendangnhap, matkhau })
+        });
+
+        const result = await res.json(); // ❗ bạn đặt tên là "data" nhưng lại dùng "result" → đã đồng bộ lại
+
+        if (result.success) {
+          const id_dn = result.user.ID_DN;
+          localStorage.setItem("id_dn", id_dn);
+          Swal.fire({
+            icon: 'success',
+            title: 'Đăng nhập thành công!',
+            showConfirmButton: false,
+            timer: 1500
+          }).then(() => {
+            window.location.href = "trangchu.html";
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Sai thông tin',
+            text: 'Tên đăng nhập hoặc mật khẩu không đúng!'
+          });
+        }
+
+      } catch (err) {
+        console.error('Lỗi đăng nhập:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi máy chủ',
+          text: 'Không thể kết nối đến server.'
+        });
+      }
+    }
+  </script>
+</body>
+</html>

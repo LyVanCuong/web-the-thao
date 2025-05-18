@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Thông tin cá nhân</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <button class="exit-button" onclick="window.location.href='trangchu.html'">←</button>
+  <h2>Thông tin cá nhân</h2>
+
+  <div class="profile-card">
+    <img id="avatar" src="default.png" alt="Ảnh đại diện" />
+    <div class="info" id="hoten"></div>
+    <div class="info" id="tuoi"></div>
+    <div class="info" id="gioitinh"></div>
+    <div class="info" id="ngaysinh"></div>
+    <div class="info" id="sdt"></div>
+    <div class="info" id="gmail"></div>
+    <br>
+    <button onclick="chinhSuaThongTin()">Chỉnh sửa</button>
+  </div>
+
+  <script>
+    const id_dn = localStorage.getItem("id_dn");
+
+    async function loadThongTin() {
+      try {
+        const res = await fetch(`http://localhost:3000/api/profile/${id_dn}`);
+        const result = await res.json();
+
+        if (result.success) {
+          const info = result.data;
+          document.getElementById("hoten").textContent = "Họ tên: " + info.Ho_ten;
+          document.getElementById("tuoi").textContent = "Tuổi: " + info.Tuoi;
+          document.getElementById("gioitinh").textContent = "Giới tính: " + info.Gioi_tinh;
+          document.getElementById("ngaysinh").textContent = "Ngày sinh: " + info.Ngay_sinh;
+          document.getElementById("sdt").textContent = "SĐT: " + info.Sdt;
+          document.getElementById("gmail").textContent = "Email: " + info.Gmail;
+          document.getElementById("avatar").src = info.Anh_dai_dien || "default.png";
+        } else {
+          Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không tìm thấy người dùng' });
+        }
+      } catch (err) {
+        console.error(err);
+        Swal.fire({ icon: 'error', title: 'Lỗi', text: 'Không thể tải thông tin' });
+      }
+    }
+
+    function chinhSuaThongTin() {
+      Swal.fire({
+        title: 'Chức năng đang phát triển',
+        text: 'Bạn sẽ sớm có thể chỉnh sửa thông tin cá nhân tại đây.',
+        icon: 'info',
+        confirmButtonText: 'Đóng'
+      });
+    }
+
+    loadThongTin();
+  </script>
+</body>
+</html>

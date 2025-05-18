@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách trận</title>
+   <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button class="exit-button" onclick="window.location.href='trangchu.html'"><</button>
+  <h2>Danh sách các trận đấu</h2>
+  <table border="1">
+    <tr>
+      <th>Môn</th>
+      <th>Địa điểm</th>
+      <th>Thời gian</th>
+      <th>Người tạo</th>
+      <th>Số người tham gia</th>
+      <th>Hành động</th>
+    </tr>
+    <tr>
+      <td>Bóng đá</td>
+      <td>Sân A</td>
+      <td>2025-06-01 15:00</td>
+      <td>Nguyen Van A</td>
+      <td>5</td>
+      <td><button onclick="thamgia()">Tham gia</button></td>
+    </tr>
+  </table>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function thamgia() {
+    Swal.fire({
+      icon: 'success',
+      title: 'Tham gia thành công!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+</script>
+
+</body>
+</html>
